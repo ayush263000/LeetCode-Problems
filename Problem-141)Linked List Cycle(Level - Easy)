@@ -1,0 +1,20 @@
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+        if(head==null){
+            return false;
+        }
+        ListNode active=head.next;
+        ListNode lazy=head;
+        while(active!=null && lazy!=null){
+            if(active.next==null){
+                return false;
+            }
+            if(active==lazy) {
+                return true;
+            }
+            active=active.next.next;
+            lazy=lazy.next;
+        }
+        return false;
+    }
+}
