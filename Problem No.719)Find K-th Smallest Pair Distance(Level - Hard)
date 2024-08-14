@@ -1,0 +1,36 @@
+import java.util.Arrays;
+
+class Solution {
+    public int smallestDistancePair(int[] numbers, int k) {
+        Arrays.sort(numbers);
+        int minDist = 0;
+        int maxDist = numbers[numbers.length - 1] - numbers[0];
+        
+        while (minDist < maxDist) {
+            int midDist = minDist + (maxDist - minDist) / 2;
+            int pairsCount = countPairsWithinDistance(numbers, midDist);
+            
+            if (pairsCount < k) {
+                minDist = midDist + 1;
+            } else {
+                maxDist = midDist;
+            }
+        }
+        
+        return minDist;
+    }
+
+    private int countPairsWithinDistance(int[] numbers, int targetDist) {
+        int count = 0;
+        int left = 0;
+        
+        for (int right = 1; right < numbers.length; right++) {
+            while (numbers[right] - numbers[left] > targetDist) {
+                left++;
+            }
+            count += right - left;
+        }
+        
+        return count;
+    }
+}
