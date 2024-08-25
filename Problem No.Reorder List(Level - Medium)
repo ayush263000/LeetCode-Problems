@@ -1,0 +1,29 @@
+class Solution {
+    public void reorderList(ListNode head) {
+        if(head == null){
+            return ;
+        }
+        ListNode turtle = head, hare = head;
+        while(hare !=null && hare.next != null){
+            turtle = turtle.next;
+            hare = hare.next.next;
+        }
+        ListNode prev = null, curr = turtle, temp;
+        while(curr != null){
+            temp = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = temp;
+        }
+        ListNode first = head,second = prev;
+        while(second.next != null){
+            temp = first.next;
+            first.next = second;
+            first = temp;
+
+            temp = second.next;
+            second.next = first;
+            second = temp;
+        }
+    }
+}
