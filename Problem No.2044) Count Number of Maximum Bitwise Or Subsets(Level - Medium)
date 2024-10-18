@@ -1,0 +1,26 @@
+class Solution {
+    public int countMaxOrSubsets(int[] nums) {
+        // targetOr
+        int targetOr = 0;
+        for(int num:nums){
+            targetOr |= num;
+        }
+        Integer dp[][] = new Integer[nums.length][targetOr+1];
+        return recu(0,nums,0,targetOr,dp);
+    }
+    public int recu(int idx,int nums[],int currOr,int targetOr,Integer dp[][]){
+        //base case
+        if(idx == nums.length){
+            return (currOr == targetOr)?1:0;
+        }
+        //check if already solved
+        if(dp[idx][currOr]!=null){
+            return dp[idx][currOr];
+        }
+        //pick a number from nums array
+        int pickCount = recu(idx+1,nums,currOr | nums[idx],targetOr,dp);
+        //no pick
+        int noPickCount = recu(idx+1,nums,currOr,targetOr,dp);
+        return dp[idx][currOr] = pickCount+noPickCount;
+    }
+}
