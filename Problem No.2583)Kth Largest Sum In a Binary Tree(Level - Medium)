@@ -25,3 +25,34 @@ class Solution {
         return pq.size() < k ? -1 : pq.poll();
     }
 }
+Orr
+
+class Solution {
+    public long kthLargestLevelSum(TreeNode root, int k) {
+        PriorityQueue<Long> pq = new PriorityQueue<>();
+        Queue<TreeNode> currLevel = new LinkedList<>();
+        currLevel.offer(root);
+        while(!currLevel.isEmpty()){
+            int size = currLevel.size();
+            long sum = 0l;
+            for(int i=0;i<size;i++){
+                TreeNode node = currLevel.poll();
+                sum += node.val;
+                if(node.left!=null){
+                    currLevel.offer(node.left);
+                }
+                if(node.right!=null){
+                    currLevel.offer(node.right);
+                }
+            }
+            pq.offer(sum);
+            if(pq.size()>k){
+                pq.poll();
+            }   
+        }
+        if(pq.size()<k){
+            return -1;
+        }
+        return pq.peek();
+    }
+}
