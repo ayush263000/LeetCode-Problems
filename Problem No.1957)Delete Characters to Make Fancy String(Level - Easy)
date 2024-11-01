@@ -1,0 +1,13 @@
+class Solution {
+    public String makeFancyString(String s) {
+        StringBuilder result = new StringBuilder();
+        for(int i=0;i<s.length();i++){
+            int l = result.length();
+            if(l >= 2 && result.charAt(l-1) == s.charAt(i) && result.charAt(l-2) == s.charAt(i)){
+                continue;
+            }
+            result.append(s.charAt(i));
+        }
+        return result.toString();
+    }
+}
