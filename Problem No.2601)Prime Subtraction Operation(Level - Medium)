@@ -1,0 +1,42 @@
+class Solution {
+    public boolean primeSubOperation(int[] nums) {
+        List<Integer> primes = generatePrimes(1000);
+        int prev = 0;
+        for(int i=0;i<nums.length;i++){
+            boolean found = false;
+            for(int j=primes.size()-1;j>=0;j--){
+                int prime = primes.get(j);
+                if(prime < nums[i] && nums[i] - prime > prev){
+                    nums[i] -= prime;
+                    found = true;
+                    break;
+                }
+            }
+            if(!found && nums[i] <= prev){
+                return false;
+            }
+            prev = nums[i];
+        }
+        return true;
+    }
+    private List<Integer> generatePrimes(int limit){
+        boolean[] isPrime = new boolean[limit+1];
+        for(int i=2;i<=limit;i++){
+            isPrime[i] = true;
+        }
+        for(int i=2;i*i<=limit;i++){
+            if(isPrime[i]){
+                for(int j=i*i;j<=limit;j+=i){
+                    isPrime[j] = false;
+                }
+            }
+        }
+        List<Integer> primes = new ArrayList<>();
+        for(int i=2;i<=limit;i++){
+            if(isPrime[i]){
+                primes.add(i);
+            }
+        }
+        return primes;
+    }
+}
