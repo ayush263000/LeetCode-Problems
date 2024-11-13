@@ -1,0 +1,36 @@
+class Solution {
+    public long countFairPairs(int[] nums, int lower, int upper) {
+        Arrays.sort(nums);
+        long fairPairsCount = 0;
+        int n = nums.length;
+        for(int i=0;i<n;i++){
+            int left = findLowerBound(nums,i+1,n-1,lower-nums[i]);
+            int right = findUpperBound(nums,i+1,n-1,upper-nums[i]);
+
+            fairPairsCount += (right-left+1);
+        }
+        return fairPairsCount;
+    }
+    private int findLowerBound(int[] nums,int start,int end,int target){
+        while(start <= end){
+            int mid = start+(end-start)/2;
+            if(nums[mid]<target){
+                start = mid+1;
+            }else{
+                end = mid-1;
+            }
+        }
+        return start;
+    }
+    private int findUpperBound(int[] nums,int start,int end,int target){
+        while(start <= end){
+            int mid = start+(end-start)/2;
+            if(nums[mid]<=target){
+                start = mid+1;
+            }else{
+                end = mid-1;
+            }
+        }
+        return end;
+    }
+}
