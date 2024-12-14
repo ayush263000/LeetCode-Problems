@@ -1,0 +1,26 @@
+class Solution {
+    public long continuousSubarrays(int[] nums) {
+        long total = 0;
+        int left = 0;
+        int maxElement = nums[0];
+        int minElement = nums[0];
+        for(int right=0;right<nums.length;right++){
+            maxElement = Math.max(maxElement, nums[right]);
+            minElement = Math.min(minElement, nums[right]);
+
+            while(maxElement - minElement>2){
+                if(nums[left]==maxElement || nums[left]==minElement){
+                    maxElement = nums[left+1];
+                    minElement = nums[left+1];
+                    for(int i=left+1;i<=right;i++){
+                        maxElement = Math.max(maxElement, nums[i]);
+                        minElement = Math.min(minElement, nums[i]);
+                    }
+                }
+                left++;
+            }
+            total += (right-left+1);
+        }
+        return total;
+    }
+}
